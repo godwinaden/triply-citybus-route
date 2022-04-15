@@ -1,0 +1,33 @@
+@import "src/styles";
+
+.logo-content{
+  /*position: absolute;
+  left: 40px;
+  top: 5px;*/
+
+  .logo-content-hart{
+    font-family: "Shark Ready", sans-serif;
+  }
+
+  .logo-content-berg{
+    font-family: "Acapella Script", sans-serif;
+  }
+
+  .logo-content-berg, .logo-content-hart{
+    font-size: 35px;
+    color: darkcyan;
+    font-weight: bold;
+  }
+
+  @include device(phone){
+    img{
+      width: 60px
+    }
+  }
+
+  @include device(tablet){
+    img{
+      width: 60px
+    }
+  }
+}

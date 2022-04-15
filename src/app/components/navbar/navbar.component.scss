@@ -1,0 +1,28 @@
+@import "src/styles";
+
+.example-icon{
+  background-color: transparent;
+  border: none;
+
+  &:hover{
+    elevation: lower;
+    color: darkcyan;
+    border: none;
+  }
+
+  .logo{
+    text-decoration: none;
+    color: transparent;
+    cursor: hand;
+  }
+
+  .logo:hover, .logo:active, .logo.active{
+    color: lightgray;
+  }
+}
+
+.navigation-items{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

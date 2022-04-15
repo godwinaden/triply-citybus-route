@@ -1,0 +1,29 @@
+<div class="transparent-content">
+  <div class="centered">
+    <div class="fixed-width">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Change App Theme</h3>
+          <p class="card-text">If you don't like the present theme of your app, you can just try another theme here, Feel free to do this as often as you desire.</p>
+          <hr/>
+          <div class="form-group">
+            <div class="form-check">
+              <input (change)="changeTheme(true)" type="radio" class="form-check-input" name="theme_dark_blue" id="theme_dark_blue" [checked]="styleTheme == 0"/>
+              <label class="form-check-label" for="theme_dark_blue">
+                Dark Blue Theme
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="radio" (change)="changeTheme(false)" class="form-check-input" name="theme_dark_purple" id="theme_dark_purple" [checked]="styleTheme == 1"/>
+              <label class="form-check-label" for="theme_dark_purple">
+                Dark Purple Theme
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="only-on-phone"/>
+      <a class="btn btn-info btn-lg btn-block only-on-phone" href="#" routerLink="home" role="button">Back</a>
+    </div>
+  </div>
+</div>

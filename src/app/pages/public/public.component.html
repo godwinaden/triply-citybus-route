@@ -1,0 +1,14 @@
+<div class="public-content">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-sidebar (sidenavClose)="sidenav.close()"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
+      <div class="route-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

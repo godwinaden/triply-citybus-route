@@ -1,0 +1,24 @@
+<mat-toolbar class="bar">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()" class="example-icon" aria-label="Hartberg City Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <span><a routerlink="home" href="#" class="logo"><app-logo></app-logo></a></span>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+      <li>
+        <a href="#compute-location">Geo Location</a>
+      </li>
+      <li>
+        <a href="#about">About</a>
+      </li>
+      <li>
+        <a href="#contact">Contact Us</a>
+      </li>
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Console</a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

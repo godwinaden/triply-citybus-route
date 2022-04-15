@@ -1,1 +1,379 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+//html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+$black-color: #171513;
+$dark-brown-color: #5f1e0c;
+$dark-blue-color: #080d20;
+$white-color: #fff;
+$gray-color: #a89f9d;
+$orange-color: #ef3b00;
+$content-padding: 30px;
+
+//centred page_content
+@mixin centered(){
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//shorthand mixin for absolute positioning | alias for mixin position
+@mixin absolute($args...){
+  @include position (absolute, $args...);
+}
+
+//shorthand mixin for relative positioning | alias for mixin position
+@mixin relative($args...){
+  @include position (relative, $args...);
+}
+
+//shorthand mixin for fixed positioning | alias for mixin position
+@mixin fixed($args...){
+  @include position (fixed, $args...);
+}
+
+@mixin position ($position, $top: null, $right: null, $bottom: null, $left: null){
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+
+}
+
+@mixin transition($x...){
+  -webkit-transition: $x;
+  -moz-transition: $x;
+  -o-transition: $x;
+  -ms-transition: $x;
+  transition: $x;
+}
+
+@mixin opacity($x){
+  opacity: $x;
+}
+
+@mixin right-flex(){
+  display: flex;
+  justify-content: right;
+}
+
+@mixin left-flex(){
+  display: flex;
+  justify-content: left;
+}
+
+@mixin center-flex(){
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@mixin bg-overlay($url: '', $color, $opacity) {
+  background-size: contain;
+  position: fixed;
+  background: linear-gradient(to right, rgba($color, $opacity), rgba($color, $opacity)), url($url);
+}
+
+@mixin overlay($position, $z-index, $duration){
+  position: $position;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  z-index: $z-index;
+  @include transition(opacity $duration ease-in-out, height 0s linear, visibility 0s linear);
+  visibility: hidden;
+  overflow: hidden;
+  @include opacity(0.0);
+
+  &.fade-out{
+    @include transition(opacity $duration ease-in-out, height 0s linear $duration, visibility 0s linear $duration);
+  }
+
+  &.visible{
+    height: 100%;
+    visibility: visible;
+    @include opacity(1.0);
+  }
+}
+
+.body{
+  overflow-x: hidden !important;
+}
+
+@keyframes animate-shapes {
+
+  0%{
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+
+  100%{
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+
+}
+
+.animate-character{
+  background-image: linear-gradient(
+      -225deg,
+      #000 0%,
+      deepskyblue 29%,
+      skyblue 67%,
+      #000 100%
+  );
+  text-transform: uppercase;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: inherit;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+}
+
+@keyframes animatedFromRightToLeft {
+  from {background-position: 0 50%;}
+  to {background-position: 100% 100%;}
+}
+
+@keyframes animatedBackground {
+  from {background-position: 0 0;}
+  to {background-position: 100% 100%;}
+}
+
+@mixin device($breakpoint) {
+  @if($breakpoint == tv)  {
+    @media (min-width: 1201px) { @content }
+  }
+  @if($breakpoint == desktop)  {
+    @media (min-width: 1025px) and (max-width: 1200px) { @content }
+  }
+  @if($breakpoint == laptop)  {
+    @media (min-width: 769px) and (max-width: 1024px) { @content }
+  }
+  @if($breakpoint == tablet)  {
+    @media (min-width: 481px) and (max-width: 768px) { @content }
+  }
+  @if($breakpoint == phone)  {
+    @media (min-width: 320px) and (max-width: 480px) { @content }
+  }
+}
+
+@mixin madeCentered() {
+  float: none !important;
+  padding: 10px 0 10px 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  h3,h2,p{
+    text-align: center;
+  }
+}
+
+.only-on-phone{
+  display: none;
+
+  @include device(phone){
+    display: inline-block;
+  }
+}
+
+.only-on-laptop-above{
+  display: none;
+
+  @include device(laptop){
+    display: inline-block;
+  }
+  @include device(desktop){
+    display: inline-block;
+  }
+  @include device(tv){
+    display: inline-block;
+  }
+}
+
+@mixin pageSettings{
+  @include centered;
+  background-color: rgba(0,0,0,0.6);
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)){
+  //for chrome browsers
+  &::-webkit-scrollbar{
+    width: $size !important;
+    height: $size !important;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    background: $foreground-color !important;
+  }
+
+  &::-webkit-scrollbar-track{
+    background: $background-color !important;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color !important;
+    scrollbar-track-color: $background-color !important;
+  }
+}
+
+@mixin theme($name, $color, $menuColor) {
+  // Define colors in your theme
+  $primary: $color;
+  $secondary: lighten(adjust-hue($color, 20), 10%);
+  $lighter: lighten($color, 30%);
+
+  // Add your classes with css colors added
+  .#{$name} {
+    scroll-behavior: smooth;
+
+    .navbar-toggler{
+      color: $primary;
+    }
+
+    .navbar{
+      background-color: $primary;
+    }
+
+    .transparent-content{
+      padding: 20px !important;
+      background-color: rgba(0,0,0,0.9);
+      width: 100%;
+      height: auto;
+
+      .only-on-phone{
+        margin-bottom: 20px;
+      }
+
+      .centered{
+        @include centered;
+      }
+
+      p{
+        font-size: 18px;
+        color: #bfbfbf;
+        text-wrap: normal;
+        text-align: left;
+      }
+
+      h1, h2{
+        color: $white-color;
+      }
+    }
+
+    .jumbotron{
+      h1.display-4{
+        color: $black-color
+      }
+
+      p{
+        font-size: 15px;
+      }
+
+      p.lead{
+        font-size: 18px;
+      }
+
+      p.lead, p{
+        color: $black-color;
+      }
+    }
+
+    .card p{
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 18px;
+    }
+
+    .navbar li a {
+      color: $menuColor !important;
+
+      &:hover{
+        color: lighten($menuColor, 10%) !important;
+      }
+
+      &.active{
+        color: lighten($menuColor, 30%) !important;
+      }
+    }
+
+    &.app-content, &.custom-dialog-container .mat-dialog-container, &.mat-dialog-content{
+      @if $name == theme-blue {
+        @include scrollbars(6px, darken($primary, 20%), $primary);
+      }@else {
+        @include scrollbars(7px, darken($primary, 30%), lighten($primary, 5%));
+      }
+    }
+
+    &.moving-circles-content .area{
+      @if $name == theme-blue {
+        background: #4e54c8;
+        background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+      }@else {
+        background: #663399;
+        background: -webkit-linear-gradient(to left, #8f94fb, #663399);
+      }
+    }
+
+    &.animate-character{
+      @if $name == theme-blue {
+        background-image: linear-gradient(
+            -225deg,
+            #000 0%,
+            deepskyblue 29%,
+            skyblue 67%,
+            #fff 100%
+        );
+      }@else {
+        background-image: linear-gradient(
+            -225deg,
+            #231557 0%,
+            #44107a 29%,
+            #ff1361 67%,
+            #fff800 100%
+        );
+      }
+    }
+
+  }
+}
+
+@include theme(theme-blue, $dark-blue-color, dodgerblue);
+@include theme(theme-purple, darken(purple, 10%), lighten(purple, 20%));
+
+.bar{
+  background-color: white;
+
+  a{
+    text-decoration: none;
+    color: gray;
+    font-size: 16px;
+    font-weight: normal;
+
+    &:hover, &:active{
+      color: darkcyan;
+    }
+  }
+}
+

@@ -1,0 +1,23 @@
+<mat-nav-list class="bar">
+  <a mat-list-item routerLink="/" (click)="onSidenavClose()">
+    <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+  </a>
+  <a mat-list-item href="#compute-location" (click)="onSidenavClose()">
+    <mat-icon>location</mat-icon> <span class="nav-caption">Geo Locations</span>
+  </a>
+  <a mat-list-item href="#about" (click)="onSidenavClose()">
+    <mat-icon>info</mat-icon><span class="nav-caption">About Hartberg</span>
+  </a>
+  <a mat-list-item href="#contact" (click)="onSidenavClose()">
+    <mat-icon>phone</mat-icon><span class="nav-caption">Contact Us</span>
+  </a>
+  <mat-list-item [matMenuTriggerFor]="menu">
+    <mat-icon>unfold_more</mat-icon>
+    <a matline href="#">Console</a>
+  </mat-list-item>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/dashboard/catchment-area" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onSidenavClose()">Catchment Areas</button>
+    <button mat-menu-item routerLink="/dashboard/catchment-area-population" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onSidenavClose()">Catchment Population</button>
+    <button mat-menu-item routerLink="/dashboard/hartberg-population" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onSidenavClose()">Hartberg Population</button>
+  </mat-menu>
+</mat-nav-list>

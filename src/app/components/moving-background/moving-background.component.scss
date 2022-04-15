@@ -1,0 +1,20 @@
+@import "src/styles";
+
+.moving-content{
+  width: 100%;
+
+  .navbar{
+    height: 30px;
+    background-color: lightgray;
+    color: black;
+    justify-content: flex-end;
+    display: flex;
+    padding: 7px;
+
+    .nav-right{
+      .author-title{font-size: 10px; color: deeppink; margin-right: 5px}
+      .author-name{font-family: "Tekton Pro", serif; font-weight: bold; margin-right: 15px}
+      .small-icon{font-size: 15px; color: deeppink}
+    }
+  }
+}

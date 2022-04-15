@@ -1,0 +1,61 @@
+@import "src/styles";
+
+.page-not-found-content{
+  @include centered;
+
+  .center{
+    width: 60%;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    .page-main-content{
+      @include centered;
+
+      h1,p{margin: 0 20px 0 20px;}
+      h1{
+        text-transform: uppercase;
+        color: #000;
+        font-weight: bold;
+        font-size: 50px;
+        line-height: 0.8;
+        text-align: center;
+      }
+      p{
+        font-size: 20px;
+        font-family: 'Exo', sans-serif;
+        color: dodgerblue;
+        line-height: 1.3;
+        font-weight: 500;
+      }
+
+      @include device(phone){
+        flex-direction: column;
+
+        h1,p{margin: 20px 0 20px 0;}
+      }
+
+      @include device(tablet){
+        flex-direction: column;
+      }
+    }
+
+    div.button{
+      @include right-flex;
+      a{
+        text-decoration: none;
+        color: white;
+        background-color: aqua;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 600;
+
+        &:hover{background-color: aquamarine;}
+      }
+    }
+  }
+
+
+
+
+}

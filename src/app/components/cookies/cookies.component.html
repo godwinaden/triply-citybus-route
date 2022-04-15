@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <div class="centered">
+    <app-logo></app-logo>
+  </div>
+  <p>{{data.paragraph_1}}</p>
+  <p>{{data.paragraph_2}}</p>
+  <p>{{data.paragraph_3}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onDisagreedClicked()" mat-dialog-close="true">Disagree</button>
+  <button mat-button (click)="onMoreOptionsClicked()" mat-dialog-close="true">More Options</button>
+  <button mat-button (click)="onAgreedClicked()" mat-dialog-close="true" cdkFocusInitial>Agree</button>
+</div>

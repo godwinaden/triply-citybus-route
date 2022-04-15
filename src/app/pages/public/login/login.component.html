@@ -1,0 +1,24 @@
+<div class="login-content">
+  <div class="login-wrapper">
+    <h1>Console Authentication</h1>
+    <mat-form-field appearance="fill" color="warn">
+      <mat-label class="label">Type Pin</mat-label>
+      <input [(ngModel)]="myPin" [disabled]="true" matInput class="input">
+      <mat-icon *ngIf="myPin.length < 1" class="label" matSuffix>vpn_key</mat-icon>
+      <button *ngIf="myPin.length > 0" (click)="clear()" mat-button matSuffix mat-stroked-button aria-label="Clear">
+        <mat-icon class="label">clear</mat-icon>
+      </button>
+      <mat-hint class="label">Kindly Type Your Secret Pin By Clicking Buttons Below.</mat-hint>
+      <mat-error *ngIf="errorMsg != ''">{{errorMsg}}</mat-error>
+    </mat-form-field>
+    <hr/>
+    <br/>
+    <mat-grid-list cols="4" rowHeight="4:3">
+      <mat-grid-tile *ngFor="let pin of pins; trackBy: trackByPins">
+        <button mat-fab (click)="onPinEntered(pin)">
+          <mat-label class="mat-18">{{pin}}</mat-label>
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
