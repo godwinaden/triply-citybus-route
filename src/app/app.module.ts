@@ -12,9 +12,11 @@ import {PublicModule} from "./pages/public/public.module";
 import {DashboardModule} from "./pages/dashboard/dashboard.module";
 import {ComponentsModule} from "./components/components.module";
 import {MatButtonModule} from "@angular/material/button";
-import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
+import {TransportModeService} from "./services/transport-mode/transport-mode.service";
+import {HttpClientModule} from "@angular/common/http";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 @NgModule({
   declarations: [
@@ -24,21 +26,20 @@ import {MatIconModule} from "@angular/material/icon";
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    LeafletModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     PublicModule,
     MatButtonModule,
+    HttpClientModule,
     MatIconModule,
     DashboardModule,
     ComponentsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [AdminGuard, AdminInnerGuard, ChangeThemeService],
+  providers: [AdminGuard, AdminInnerGuard, ChangeThemeService, TransportModeService],
   exports: [
     AppComponent,
   ],

@@ -1,9 +1,9 @@
-<div [ngClass]="styleTheme == 0? 'theme-blue' : 'theme-purple'" class="app-content">
-  <app-moving-background id="app"></app-moving-background>
+<div [ngClass]="styleTheme == 0? 'theme-blue' : 'theme-purple'" (scroll)="onScrolled($event)" class="app-content">
+  <app-moving-background id="app" ></app-moving-background>
   <div class="theme-content">
     <router-outlet></router-outlet>
   </div>
-  <div class="scroll-up-content" [ngClass]="{'show-scrollTop': windowScrolled}">
+  <div *ngIf="windowScrolled" class="scroll-up-content">
     <a aria-pressed="true" href="#app" mat-mini-fab color="primary" aria-label="A button to help you scroll up">
       <mat-icon>arrow_upward</mat-icon>
     </a>

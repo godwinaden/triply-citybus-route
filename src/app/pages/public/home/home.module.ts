@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import {MatDialog} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {ComponentsModule} from "../../../components/components.module";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {ComponentsModule} from "../../../components/components.module";
     HomeRoutingModule,
     MatButtonModule,
     ComponentsModule,
+    LeafletModule,
   ],
   providers: [MatDialog],
 })

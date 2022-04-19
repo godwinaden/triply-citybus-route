@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangeThemeComponent } from './change-theme.component';
+import {ChangeThemeService} from "../../globals";
 
 describe('ChangeThemeComponent', () => {
   let component: ChangeThemeComponent;
@@ -8,7 +9,8 @@ describe('ChangeThemeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChangeThemeComponent ]
+      declarations: [ ChangeThemeComponent ],
+      providers: [ChangeThemeService]
     })
     .compileComponents();
   });

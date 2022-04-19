@@ -18,9 +18,11 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    window.addEventListener('scroll', () => {
-      alert();
-      this.windowScrolled = window.pageXOffset > 100 || document.body.scrollTop > 100;
-    });
+
+  }
+
+  onScrolled(element: any){
+    let elementTarget = document.getElementById("app");
+    this.windowScrolled = element.target.scrollTop > (elementTarget!.offsetTop + elementTarget!.offsetHeight);
   }
 }

@@ -12,7 +12,7 @@ import {SidebarComponent} from "./sidebar/sidebar.component";
 import {MatMenuModule} from "@angular/material/menu";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatListModule} from "@angular/material/list";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
@@ -20,7 +20,9 @@ import { MovingCarComponent } from './moving-car/moving-car.component';
 import { ScrollUpComponent } from './scroll-up/scroll-up.component';
 import {RouterModule} from "@angular/router";
 import { FooterComponent } from './footer/footer.component';
-// import {AngularFontAwesomeModule} from "angular-font-awesome";
+import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
+import {TransportModeService} from "../services/transport-mode/transport-mode.service";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 @NgModule({
   declarations: [
@@ -35,19 +37,20 @@ import { FooterComponent } from './footer/footer.component';
     SidebarComponent,
     MovingCarComponent,
     ScrollUpComponent,
-    FooterComponent
+    FooterComponent,
+    LeafletMapComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     MatMenuModule,
     FlexLayoutModule,
-    // AngularFontAwesomeModule,
     MatListModule,
     MatDialogModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    LeafletModule,
   ],
   exports: [
     BluredLinesComponent,
@@ -61,7 +64,15 @@ import { FooterComponent } from './footer/footer.component';
     SidebarComponent,
     MovingCarComponent,
     ScrollUpComponent,
-    FooterComponent
-  ]
+    FooterComponent,
+    LeafletMapComponent
+  ],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    TransportModeService,
+  ],
 })
 export class ComponentsModule { }
