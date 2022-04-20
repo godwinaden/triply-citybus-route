@@ -17,6 +17,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {TransportModeService} from "./services/transport-mode/transport-mode.service";
 import {HttpClientModule} from "@angular/common/http";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {PopulationService} from "./services/population/population.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [AdminGuard, AdminInnerGuard, ChangeThemeService, TransportModeService],
+  providers: [AdminGuard, AdminInnerGuard, ChangeThemeService, TransportModeService, PopulationService],
   exports: [
     AppComponent,
   ],

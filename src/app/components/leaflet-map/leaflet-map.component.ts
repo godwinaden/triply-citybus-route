@@ -3,6 +3,8 @@ import {TransportModeService} from "../../services/transport-mode/transport-mode
 import * as Leaf from 'leaflet';
 import {LeafletControlLayersConfig} from "@asymmetrik/ngx-leaflet";
 import {tileLayer} from "leaflet";
+import {PopulationService} from "../../services/population/population.service";
+import {Located} from "../../models/located/located";
 
 @Component({
   selector: 'app-leaflet-map',
@@ -27,12 +29,12 @@ export class LeafletMapComponent implements OnInit {
     // center: Leaf.latLng(47.2815118872144, 15.990487812776836)
   };
 
-  constructor(private transportModeService: TransportModeService ) {
+  constructor(private transportModeService: TransportModeService, private population: PopulationService ) {
     this.selectMode();
-    console.log('Bike: ' + JSON.stringify(this.transportModeService.angersiedlung_bike));
   }
 
   ngOnInit(): void {
+    Leaf.Icon.Default.imagePath = "assets/leaflet/";
     let tMS = this.transportModeService, stops = tMS.stops;
     let citymarkers = Leaf.layerGroup([
       Leaf.marker(stops.hatric_shopping_center, {})
@@ -53,7 +55,39 @@ export class LeafletMapComponent implements OnInit {
       }
     };
     this.getMapOverlays();
+  }
 
+  createGroup(data: Located[], iconType: number = 0): any {
+    let iconOption: any = {
+      iconSize: [ 15, 15 ],
+      iconAnchor: [ 2, 0 ],
+      iconUrl: `assets/images/${iconType == 0? 'child.png':
+        (iconType == 1? 'youth.png' : (iconType == 2? "woman.png" : "old-people.png"))}` ,
+      // shadowUrl: 'assets/leaflet/marker-shadow.png',
+    };
+    let option = { icon: Leaf.icon(iconOption),};
+    return Leaf.layerGroup(data.map(
+        (child: Located) => {
+          // console.log("Child: ", child, child.latitude, child.longitude);
+          return Leaf.marker([child.latitude, child.longitude], option)
+            .bindPopup( '<img alt="marker" src="' + iconOption.iconUrl + '" /><p>'+ (iconOption.iconUrl.split("/").last) +'</p>');
+        }));
+  }
+
+  addPopulationMarkers(map: Leaf.Map){
+    this.population.get_all().then((data) => {
+      let childrenMarkers = this.createGroup(data.children, 0);
+      let womenMarkers = this.createGroup(data.women, 2);
+      let youthMarkers = this.createGroup(data.youths, 1);
+      let elderlyMarkers = this.createGroup(data.elderly, 3);
+      this.layersControl.overlays["Children | 0 - 5 years | " + data.children.length] = childrenMarkers;
+      this.layersControl.overlays["Women | 15 - 49 years | " + data.women.length] = womenMarkers;
+      this.layersControl.overlays["Youths | 15 - 24 years | " + data.youths.length] = youthMarkers;
+      this.layersControl.overlays["Elderly | 60+ 5 years | " + data.elderly.length] = elderlyMarkers;
+      this.layersControl.overlays["Children | 0 - 5 years | " + data.children.length].addTo(map);
+    }).catch((ex) => {
+      console.log('Exception Handler: ', ex);
+    });
   }
 
   getMapOverlays(){
@@ -61,7 +95,7 @@ export class LeafletMapComponent implements OnInit {
     tMS.angersiedlung_bike.subscribe(data => {
       let angersiedlungCatchmentAreaMarkers = Leaf.layerGroup([]);
       for (const c of data.features) {
-        const lon = c.geometry.coordinates[0];
+        // const lon = c.geometry.coordinates[0];
         for(const geo of c.geometry.coordinates){
           for(const coors of geo[0]){
             angersiedlungCatchmentAreaMarkers.addLayer((Leaf.marker(Leaf.latLng(coors[0],coors[1]), {})
@@ -89,10 +123,12 @@ export class LeafletMapComponent implements OnInit {
     tMS.angersiedlung_walk.subscribe(data => {
       this.layersControl.overlays["angersiedlung_walk"] = Leaf.geoJSON(data);
     });
+
   }
 
   onMapReady(map: Leaf.Map) {
     // Leaf.geoJSON(this.selectedTransportMode).addTo(map);
+    this.addPopulationMarkers(map);
     let stops = this.transportModeService.stops;
     this.layersControl.baseLayers["Open Street Map"].addTo(map);
     this.layersControl.overlays["Bus Stops"].addTo(map);

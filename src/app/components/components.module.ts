@@ -23,6 +23,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LeafletMapComponent } from './leaflet-map/leaflet-map.component';
 import {TransportModeService} from "../services/transport-mode/transport-mode.service";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {PopulationService} from "../services/population/population.service";
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
       useValue: {}
     },
     TransportModeService,
+    PopulationService,
   ],
 })
 export class ComponentsModule { }
