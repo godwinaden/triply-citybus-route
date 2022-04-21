@@ -3,7 +3,7 @@
     <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
   </a>
   <a mat-list-item href="#compute-location" (click)="onSidenavClose()">
-    <mat-icon>location</mat-icon> <span class="nav-caption">Geo Locations</span>
+    <mat-icon>location</mat-icon> <span class="nav-caption">The City</span>
   </a>
   <a mat-list-item href="#about" (click)="onSidenavClose()">
     <mat-icon>info</mat-icon><span class="nav-caption">About Hartberg</span>
@@ -11,7 +11,7 @@
   <a mat-list-item href="#contact" (click)="onSidenavClose()">
     <mat-icon>phone</mat-icon><span class="nav-caption">Contact Us</span>
   </a>
-  <mat-list-item [matMenuTriggerFor]="menu">
+  <mat-list-item *ngIf="type == 1" [matMenuTriggerFor]="menu">
     <mat-icon>unfold_more</mat-icon>
     <a matline href="#">Console</a>
   </mat-list-item>

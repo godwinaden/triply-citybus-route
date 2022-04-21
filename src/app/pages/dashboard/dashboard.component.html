@@ -1,2 +1,13 @@
-<p>dashboard works!</p>
-<router-outlet></router-outlet>
+<div class="dashboard-content">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-sidebar [type]="1" (sidenavClose)="sidenav.close()"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-navbar [type]="1" (sidenavToggle)="sidenav.toggle()"></app-navbar>
+      <div class="route-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

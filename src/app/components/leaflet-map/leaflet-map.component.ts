@@ -13,8 +13,8 @@ import {Located} from "../../models/located/located";
 })
 export class LeafletMapComponent implements OnInit {
 
-  @Input("transportMode") transportMode!: string;
-  selectedTransportMode: any;
+  @Input("viewMode") viewMode!: string;
+  selectedViewMode: any;
   layersControl: LeafletControlLayersConfig = {baseLayers: {}, overlays: {}};
   options = {
     layers: [
@@ -30,10 +30,10 @@ export class LeafletMapComponent implements OnInit {
   };
 
   constructor(private transportModeService: TransportModeService, private population: PopulationService ) {
-    this.selectMode();
   }
 
   ngOnInit(): void {
+    this.selectMode();
     Leaf.Icon.Default.imagePath = "assets/leaflet/";
     let tMS = this.transportModeService, stops = tMS.stops;
     let citymarkers = Leaf.layerGroup([
@@ -54,7 +54,6 @@ export class LeafletMapComponent implements OnInit {
         "Bus Stops": citymarkers,
       }
     };
-    this.getMapOverlays();
   }
 
   createGroup(data: Located[], iconType: number = 0): any {
@@ -95,20 +94,25 @@ export class LeafletMapComponent implements OnInit {
       let womenMarkers = this.createGroup(data.women, 2);
       let youthMarkers = this.createGroup(data.youths, 1);
       let elderlyMarkers = this.createGroup(data.elderly, 3);
-      this.layersControl.overlays["Children | 0 - 5 years | " + data.children.length] = childrenMarkers;
-      this.layersControl.overlays["Women | 15 - 49 years | " + data.women.length] = womenMarkers;
-      this.layersControl.overlays["Youths | 15 - 24 years | " + data.youths.length] = youthMarkers;
-      this.layersControl.overlays["Elderly | 60+ 5 years | " + data.elderly.length] = elderlyMarkers;
-      this.layersControl.overlays["Children | 0 - 5 years | " + data.children.length].addTo(map);
+      let children = "Children | 0 - 5 years | " + data.children.length, youth = "Youths | 15 - 24 years | " + data.youths.length,
+        women = "Women | 15 - 49 years | " + data.women.length, elderly = "Elderly | 60+ 5 years | " + data.elderly.length;
+      this.layersControl.overlays[children] = childrenMarkers;
+      this.layersControl.overlays[women] = womenMarkers;
+      this.layersControl.overlays[youth] = youthMarkers;
+      this.layersControl.overlays[elderly] = elderlyMarkers;
+      this.layersControl.overlays[children].addTo(map);
+      this.layersControl.overlays[women].addTo(map);
+      this.layersControl.overlays[youth].addTo(map);
+      this.layersControl.overlays[elderly].addTo(map);
     }).catch((ex) => {
       console.log('Exception Handler: ', ex);
     });
   }
 
-  getMapOverlays(){
+  getMapOverlays(map: Leaf.Map){
     let tMS = this.transportModeService;
     tMS.angersiedlung_bike.subscribe(data => {
-      let angersiedlungCatchmentAreaMarkers = Leaf.layerGroup([]);
+      /*let angersiedlungCatchmentAreaMarkers = Leaf.layerGroup([]);
       for (const c of data.features) {
         // const lon = c.geometry.coordinates[0];
         for(const geo of c.geometry.coordinates){
@@ -117,11 +121,11 @@ export class LeafletMapComponent implements OnInit {
               .bindPopup( '<a href="' + "#" + '" target="_blank">' + c.id + '</a>').bindTooltip('<p> Time X: ' + c.properties.time + + ' m</p>')));
           }
         }
-
       }
 
-      this.layersControl.overlays["Angersiedlung Bike Catchment Area"] = angersiedlungCatchmentAreaMarkers;
+      this.layersControl.overlays["Angersiedlung Bike Catchment Area"] = angersiedlungCatchmentAreaMarkers;*/
       this.layersControl.overlays["angersiedlung_bike"] = Leaf.geoJSON(data);
+      this.layersControl.overlays["angersiedlung_bike"].addTo(map);
     });
     tMS.hauptplatz_bike.subscribe(data => {
       this.layersControl.overlays["hauptplatz_bike"] = Leaf.geoJSON(data);
@@ -142,8 +146,8 @@ export class LeafletMapComponent implements OnInit {
   }
 
   onMapReady(map: Leaf.Map) {
-    // Leaf.geoJSON(this.selectedTransportMode).addTo(map);
-    this.addPopulationMarkers(map);
+    if(this.selectedViewMode == 2) this.addPopulationMarkers(map);
+    if(this.selectedViewMode == 1) this.getMapOverlays(map);
     let stops = this.transportModeService.stops;
     this.layersControl.baseLayers["Open Street Map"].addTo(map);
     this.layersControl.overlays["Bus Stops"].addTo(map);
@@ -156,28 +160,21 @@ export class LeafletMapComponent implements OnInit {
   }
 
   selectMode(){
-    switch(this.transportMode){
-      case "angersiedlung_bike": {
-        this.selectedTransportMode = this.transportModeService.angersiedlung_bike;
+    console.log("View Mode: ", this.viewMode);
+    switch(this.viewMode){
+      case "transportation": {
+        this.selectedViewMode = 1;
         break;
       }
-      case "angersiedlung_walk": {
-        this.selectedTransportMode = this.transportModeService.angersiedlung_walk;
+      case "population": {
+        this.selectedViewMode = 2;
         break;
       }
-      case "hatric_bike": {
-        this.selectedTransportMode = this.transportModeService.hatric_bike;
+      case "catchment": {
+        this.selectedViewMode = 3;
         break;
       }
-      case "hatric_walk": {
-        this.selectedTransportMode = this.transportModeService.hatric_walk;
-        break;
-      }
-      case "hauptplatz_bike": {
-        this.selectedTransportMode = this.transportModeService.hauptplatz_bike;
-        break;
-      }
-      default: this.selectedTransportMode = this.transportModeService.hauptplatz_walk;
+      default: this.selectedViewMode = 4;
     }
   }
 

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { CatchmentAreaPopulationRoutingModule } from './catchment-area-population-routing.module';
 import { CatchmentAreaPopulationComponent } from './catchment-area-population.component';
+import {ComponentsModule} from "../../../components/components.module";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { CatchmentAreaPopulationComponent } from './catchment-area-population.co
   ],
   imports: [
     CommonModule,
-    CatchmentAreaPopulationRoutingModule
+    CatchmentAreaPopulationRoutingModule,
+    ComponentsModule,
+    LeafletModule,
   ]
 })
 export class CatchmentAreaPopulationModule { }

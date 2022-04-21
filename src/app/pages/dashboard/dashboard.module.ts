@@ -5,6 +5,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import {AdminInnerGuard} from "../../guards/admin-inner.guard";
 import {RouterModule} from "@angular/router";
+import {ComponentsModule} from "../../components/components.module";
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 
 @NgModule({
@@ -14,8 +16,10 @@ import {RouterModule} from "@angular/router";
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    RouterModule
+    RouterModule,
+    ComponentsModule,
+    MatSidenavModule,
   ],
-  providers: [AdminInnerGuard]
+  providers: [AdminInnerGuard, ]
 })
 export class DashboardModule { }
