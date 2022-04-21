@@ -70,8 +70,23 @@ export class LeafletMapComponent implements OnInit {
         (child: Located) => {
           // console.log("Child: ", child, child.latitude, child.longitude);
           return Leaf.marker([child.latitude, child.longitude], option)
-            .bindPopup( '<img alt="marker" src="' + iconOption.iconUrl + '" /><p>'+ (iconOption.iconUrl.split("/").last) +'</p>');
+            .bindPopup( '<img alt="marker" src="' + iconOption.iconUrl + '" /><p>'+ (iconType == 0? 'Infant: 0 - 5 years':
+              (iconType == 1? 'Youth: 15 - 24 years' : (iconType == 2? "Woman: 15 - 49 years" : "Old Person: 60+"))) +'</p>');
         }));
+  }
+
+  getLatLong(lat: number, lng: number, radius: number) {
+    const earth = 6371;// earth radius in miles
+    const maxLat = ((lat + Math.PI / 2) * 180) / Math.PI;
+    const minLat = ((lat - Math.PI / 2) * 180) / Math.PI;
+    const maxLng = ((lng + (Math.PI * radius) / earth) * 180) / Math.PI;
+    const minLng = ((lng - (Math.PI * radius) / earth) * 180) / Math.PI;
+    return {
+      maxLat: maxLat,
+      minLat: minLat,
+      maxLng: maxLng,
+      minLng: minLng,
+    }
   }
 
   addPopulationMarkers(map: Leaf.Map){
