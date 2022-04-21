@@ -2,6 +2,40 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
 
+
+## Project Libraries
+For this project, the following third party libraries where used:
+        Rxjs,
+        Leaflet,
+        Papaparse,
+        Angular Material,
+        and geojson.
+        
+## Installation
+Clone this repo by running the following code on your command prompt or shell
+
+            git clone https://github.com/godwinaden/triply-citybus-route.git
+            
+after the project folder is created by git, navigate into it and run the following in project directory on a shell/command prompt
+
+            npm install
+            
+this will install all the dependencies. After that you can run 
+
+            ng serve --live-reload
+           
+this will serve the project on port 4200 in a local server.
+
+
+## Dashboard Password
+ The dashboard password is
+        
+            #8584#
+            
+you need to log in to the dashboard to see catchment area, population, and catchment area population
+        
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
